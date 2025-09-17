@@ -19,23 +19,25 @@ import { createPost } from "@/server/posts/create-post";
 import { toast } from "sonner";
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation"; // Use "next/router" if using Pages Router
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 export default function CreatePost() {
-
-const [state, formAction, isPending] = useActionState(createPost, null);
+  const [state, formAction, isPending] = useActionState(createPost, null);
+  const queryClient = useQueryClient();
   const router = useRouter(); // Use router for navigation
-useEffect(() => {
-  if (state) {
-    if (state.success === true) {
-      toast(state.message as string);
-    } else if (state.message) {
-      toast.error(state.message as string);
-      // console.error("Form submission error:", state.message);
-    }
+  useEffect(() => {
+    if (state) {
+      if (state.success === true) {
+        queryClient.refetchQueries({ queryKey: ["posts"] });
+        toast(state.message as string);
+      } else if (state.message) {
+        toast.error(state.message as string);
+        // console.error("Form submission error:", state.message);
+      }
       if (state?.redirect) {
-            router.push(state.redirect);
-          }
-  }
-}, [state]);
+        router.push(state.redirect);
+      }
+    }
+  }, [state, queryClient, router]);
 
   return (
     <div className="w-full  flex justify-center ">

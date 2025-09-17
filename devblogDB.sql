@@ -19,8 +19,6 @@ create table "session" (
  "userId" text not null references "user" ("id"));
  
 
-
-
 create table "account" (
 "id" text not null primary key, 
 "accountId" text not null, 

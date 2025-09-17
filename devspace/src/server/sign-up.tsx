@@ -8,6 +8,9 @@ export async function signUpAction(prevState: any, formData: FormData) {
   const data = {
     fullName: formData.get("fullName"),
     email: formData.get("email"),
+    bio: formData.get("bio"),
+    phone: formData.get("phone"),
+    website: formData.get("website"),
     password: formData.get("password"),
     passwordConfirmation: formData.get("passwordConfirmation"),
     // image: formData.get("image"),
@@ -21,17 +24,18 @@ export async function signUpAction(prevState: any, formData: FormData) {
           email: parsedData.email,
           password: parsedData.password,
           name: parsedData.fullName,
+          phone: parsedData.phone,
+          bio: parsedData.bio,
+          website: parsedData.website,
         },
       });
-console.log(response)
+      console.log(response);
       return {
         success: true,
         message: "Signup successful!",
       };
     } catch (error) {
       if (error instanceof APIError) {
-
-
         return { authError: { form: error.message } };
       }
     }

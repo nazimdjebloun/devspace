@@ -13,7 +13,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", postRoutes);
-
 app.listen(PORT, () => {
   console.log(` app running on port ${PORT}`);
 });

@@ -8,10 +8,9 @@ import { headers } from "next/headers";
 export default async function singOut() {
 
 try {
-  const response =  await auth.api.signOut({
+  const response = await auth.api.signOut({
     headers: await headers(),
   });
-    console.log(response);
       return {
         success: true,
         message: "Sign out successful!",

@@ -1,6 +1,13 @@
 import React from 'react'
 import Link from "next/link";
-import { LogOut, Settings, User, Loader2, CircleUserRound } from "lucide-react";
+import {
+  LogOut,
+  Settings,
+  User,
+  Loader2,
+  CircleUserRound,
+  Menu,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,12 +30,88 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { authClient } from "@/lib/auth-client"; 
-import signOut from "@/components/sign-out";
-;
+import { useSession } from "@/lib/auth-client"; 
+import singOut from "@/server/sing-out";
+import { toast } from "sonner";
+import { Session } from "@/lib/auth";
+import Singout from './singout';
 
 export default function UserMenu() {
-  const { data: session, isPending, error, refetch } = authClient.useSession();
+
+const { data: session, isPending, error, refetch } = useSession();
+  
+  // const handleSignOut = async () => {
+  //   const response = await singOut();
+  //   if (response?.success) {
+  //     toast.success("sign out  successfully");
+  //   } else {
+  //     console.error(response?.message || "Sign out failed");
+  //     toast.error("Sign out failed");
+  //   }
+  // };
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon">
+            {/* <CircleUserRound /> */}
+            <Menu/>
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent className="px-2 m-2 ">
+          {session && (
+            <div>
+              <DropdownMenuLabel className="text-center">
+                My Account
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem className="px-3 ">
+                  <Link href="/profile">My profile</Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem className="px-3">
+                  Account settings
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                {/* <Button
+                  variant="ghost"
+                  onClick={handleSignOut}
+                  className="w-full border-none text-center text-red-600 hover:text-red-600"
+                >
+                  <LogOut />
+                  Sign out
+                </Button> */}
+                <Singout/>
+              </DropdownMenuGroup>
+            </div>
+          )
+          //   : (
+          //   <div>
+          //     <DropdownMenuLabel className="text-center">
+          //       Guest mode
+          //     </DropdownMenuLabel>
+          //     <DropdownMenuSeparator />
+          //     <DropdownMenuLabel className="hover:underline">
+          //       <Link href="/login">Login In</Link>
+          //     </DropdownMenuLabel>
+          //   </div>
+          // )
+          }
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+}
+
+
+
+
+
 
   //   if (!session) {
   //       return (
@@ -45,71 +128,3 @@ export default function UserMenu() {
   //         <Loader2/>
   //       );
   //     }
-  return (
-    <>
-      
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon">
-            <CircleUserRound />
-          </Button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent className="px-2 m-2 ">
-          {session ? (
-            <div>
-              <DropdownMenuLabel className="text-center">
-                My Account
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  {session.user?.name || "User"}
-                </DropdownMenuItem>
-                <DropdownMenuItem>{session.user?.email || ""}</DropdownMenuItem>
-              </DropdownMenuGroup>
-              {/* <div>
-                <p>{session.user?.name || "User"}</p>
-                <p>{session.user?.email || ""}</p>
-              </div> */}
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem className="hover:underline">
-                  Account details
-                </DropdownMenuItem>
-                <DropdownMenuItem className="hover:underline">
-                  Account settings
-                </DropdownMenuItem>
-                <DropdownMenuItem className="hover:underline">
-                  My wishlist
-                </DropdownMenuItem>
-                <DropdownMenuItem className="hover:underline">
-                  All purchases
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem
-                  className="text-red-700 hover:underline"
-                  onClick={signOut}
-                >
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </div>
-          ) : (
-            <div>
-              <DropdownMenuLabel className="text-center">
-                Guest mode
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel className="hover:underline">
-                <Link href="/login">Login In</Link>
-              </DropdownMenuLabel>
-            </div>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
-  );
-}

@@ -1,20 +1,14 @@
+import { getSessionCookie } from "better-auth/cookies";
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
 
 export async function middleware(request: NextRequest) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  const sessionCookie = getSessionCookie(request); // Optionally pass config as the second argument if cookie name or prefix is customized.
+  if (!sessionCookie) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
-
   return NextResponse.next();
 }
 
 export const config = {
-  runtime: "nodejs",
-  matcher: ["/"], // Apply middleware to specific routes
+  matcher: ["/signup"],
 };

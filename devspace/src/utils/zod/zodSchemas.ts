@@ -5,6 +5,8 @@ export const signUpSchema = z
   .object({
     fullName: z.string().min(1, "Your full name is required"),
     email: z.string().email("Invalid email address"),
+    bio: z.string().optional(),
+    website: z.string().optional(),
     // phone: z
     //   .string()
     //   .min(10, "Phone number is not valide")

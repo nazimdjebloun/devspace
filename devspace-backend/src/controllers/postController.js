@@ -4,20 +4,13 @@ export const createPost = async (req, res, next) => {
   try {
     // Validate request body
     const { title, content, summary, userId } = req.body;
-console.log(req.body);
-    // const title = "My Hardcoded Post";
-    // const content = "This is a hardcoded content.";
-    // const summary = "blog";
-    // const userId = "LZdqbyXIg0dnHF8muS7IbhfycUM7aBGs"; // Your test user ID
+    // console.log(req.body);
 
-    if (!title || !content || !summary) {
+    if (!title || !content || !summary || !userId) {
       return res.status(400).json({
         message: "Missing required fields: title, content, summary",
       });
     }
-
-    // Get user ID from auth middleware
-    // const userId = req.user.id;
 
     // Prepare data for service
     const postData = {
@@ -37,7 +30,20 @@ console.log(req.body);
     });
   } catch (error) {
     // Pass to error handling middleware
-      console.log(error);
+    console.log(error);
+    next(error);
+  }
+};
+
+export const getPost = async (req, res, next) => {
+  try {
+    const Posts = await postService.getPosts();
+    return res.status(200).json({
+      message: "Posts retrieved successfully",
+      posts: Posts,
+    });
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 };

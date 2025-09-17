@@ -38,25 +38,15 @@ import Session from "@/components/session";
 
 export default function SignIn() {
   const [state, formAction, Isloading] = useActionState(signInAction, null);
-
-useEffect(() => {
-  if (state?.success === true) {
-    toast("login successful!");
-    redirect("/"); 
-  }
-}, [state?.success]);
+  useEffect(() => {
+    if (state?.success === true) {
+      toast("login successful!");
+      redirect("/");
+    }
+  }, [state?.success]);
 
   return (
     <div className="w-[100%] flex justify-center items-center h-dvh relative">
-      <div className="absolute top-0 w-full flex  items-center justify-center  p-5 gap-10">
-        <div className="text-xl font-bold ">
-          <a href="/">Home</a>
-        </div>
-        <div className="">
-          <ThemeSwicth />
-        </div>
-      </div>
-      <div></div>
       <div>
         <Card className="w-[300px] md:w-[400px]">
           <CardHeader>
@@ -132,7 +122,7 @@ useEffect(() => {
           </CardContent>
           <CardFooter>
             <div className="flex justify-center w-full border-t py-4">
-              <p className="text-center text-xl text-neutral-500">Dev Blogs</p>
+              <p className="text-center text-xl text-neutral-500">Dev Space</p>
             </div>
           </CardFooter>
         </Card>

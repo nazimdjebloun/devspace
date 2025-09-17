@@ -5,4 +5,4 @@ export const authClient = createAuthClient({
   baseURL: process.env.BETTER_AUTH_URL, 
   plugins: [inferAdditionalFields<typeof auth>()],
 });
-export const { signIn, signUp, useSession } = createAuthClient();
+ export const { signIn, signUp, useSession } = createAuthClient();

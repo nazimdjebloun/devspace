@@ -37,14 +37,6 @@ useEffect(() => {
 
   return (
     <div className="w-[100%] flex justify-center items-center h-dvh">
-      <div className="absolute top-0 w-full flex  items-center justify-center  p-5 gap-10">
-        <div className="text-xl font-bold ">
-          <a href="/">Home</a>
-        </div>
-        <div className="">
-          <ThemeSwicth />
-        </div>
-      </div>
       {/* <Card>
         <h1>session</h1>
         <CardContent>
@@ -66,11 +58,20 @@ useEffect(() => {
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <form action={formAction}>
+        <form action={formAction}>
+          {/* <CardContent>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="email">Full name</Label>
+
+
+            </div>
+
+            </div>
+          </CardContent> */}
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="fullName">Full name</Label>
                 <Input
                   defaultValue={(state?.prevData?.fullName as string) ?? ""}
                   id="fullName"
@@ -96,6 +97,36 @@ useEffect(() => {
                 {state?.errors?.email && (
                   <p className="text-sm text-red-500">
                     {state.errors.email[0]}
+                  </p>
+                )}
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="bio">Bio</Label>
+                <Input
+                  defaultValue={(state?.prevData?.fullName as string) ?? ""}
+                  id="bio"
+                  name="bio"
+                  type="text"
+                  placeholder="Describe yourself "
+                />
+                {state?.errors?.fullName && (
+                  <p className="text-sm text-red-500">
+                    {state.errors.fullName[0]}
+                  </p>
+                )}
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="website">Website</Label>
+                <Input
+                  defaultValue={(state?.prevData?.fullName as string) ?? ""}
+                  id="website"
+                  name="website"
+                  type="text"
+                  placeholder="yourWebsite.com"
+                />
+                {state?.errors?.fullName && (
+                  <p className="text-sm text-red-500">
+                    {state.errors.fullName[0]}
                   </p>
                 )}
               </div>
@@ -164,20 +195,20 @@ useEffect(() => {
               </p>
             )}
             {/* {state?.success === true  && toast("Signup successful!") } */}
-          </form>
-          <div className="flex justify-start gap-1 items-baseline py-5">
-            <p className="text-xs md:text-sm">Already have an account ?</p>
-            <Link href="login">
-              <span className="ml-auto inline-block text-sm underline">
-                Sign In
-              </span>
-            </Link>
-          </div>
-        </CardContent>
 
+            <div className="flex justify-start gap-1 items-baseline py-5">
+              <p className="text-xs md:text-sm">Already have an account ?</p>
+              <Link href="login">
+                <span className="ml-auto inline-block text-sm underline">
+                  Sign In
+                </span>
+              </Link>
+            </div>
+          </CardContent>
+        </form>
         <CardFooter>
           <div className="flex justify-center w-full border-t py-4">
-            <p className="text-center text-xl text-neutral-500">Dev Blogs</p>
+            <p className="text-center text-xl text-neutral-500">Dev Space</p>
           </div>
         </CardFooter>
       </Card>
